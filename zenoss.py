@@ -226,7 +226,7 @@ class Zenoss(object):
         """
         return self.change_event_state(event_id, 'close')
 
-    def add_event(self, device_name, severity, summary, component='', evclasskey='', evclass=''):
+    def add_event(self, device_name, severity, summary, component='', evclasskey='', evclass='', timeout=None):
         """Manually create a new event for the device specified.
 
         """
@@ -234,7 +234,12 @@ class Zenoss(object):
         if severity not in ('Critical', 'Error', 'Warning', 'Info', 'Debug', 'Clear'):
             raise Exception('Severity %s is not valid.' % severity)
         data = dict(device=device_name, summary=summary, severity=severity, component=component, evclasskey=evclasskey, evclass=evclass)
+        if timeout:
+            data['timeout'] = timeout
         return self.__router_request('EventsRouter', 'add_event', [data])
+
+    def heartbeat(self, device_name, component, timeout=60):
+        return self.add_event(device_name, 0, '%s heartbeat' % component, component=component, evclass='/Heartbeat', timeout=timeout)
 
     def get_load_average(self, device_name):
         """Returns the 5 minute load average for a device.
