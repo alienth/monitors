@@ -226,7 +226,7 @@ class Zenoss(object):
         """
         return self.change_event_state(event_id, 'close')
 
-    def create_event_on_device(self, device_name, severity, summary, component='', evclasskey='', evclass=''):
+    def add_event(self, device_name, severity, summary, component='', evclasskey='', evclass=''):
         """Manually create a new event for the device specified.
 
         """
