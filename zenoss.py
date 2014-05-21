@@ -234,7 +234,7 @@ class Zenoss(object):
         if severity not in ('Critical', 'Error', 'Warning', 'Info', 'Debug', 'Clear'):
             raise Exception('Severity %s is not valid.' % severity)
         data = dict(device=device_name, summary=summary, severity=severity, component=component, evclasskey=evclasskey, evclass=evclass)
-        if timeout:
+        if timeout != None:
             data['timeout'] = timeout
         return self.__router_request('EventsRouter', 'add_event', [data])
 
