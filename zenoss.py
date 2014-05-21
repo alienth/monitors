@@ -239,7 +239,7 @@ class Zenoss(object):
         return self.__router_request('EventsRouter', 'add_event', [data])
 
     def heartbeat(self, device_name, component, timeout=60):
-        return self.add_event(device_name, 0, '%s heartbeat' % component, component=component, evclass='/Heartbeat', timeout=timeout)
+        return self.add_event(device_name, 'Clear', '%s heartbeat' % component, component=component, evclass='/Heartbeat', timeout=timeout)
 
     def get_load_average(self, device_name):
         """Returns the 5 minute load average for a device.
